@@ -23,7 +23,10 @@ def dict_intro() -> None:
 
     (zob. "test" w pliku test/test_dict_intro.py)
     """
-    pass
+    dict = {"Adam" : 2, "Bogdan": 4, "Cezary":1}
+
+    for imie, liczba in dict.items():
+        print(f"{imie} = {liczba}")
 
 
 # Alias `Menu` na typ `Dict[str, float]` poprawia czytelność kodu
@@ -37,7 +40,7 @@ def update_price(menu: Menu, dish: str) -> None:
     :param menu: menu, które należy zaktualizować
     :param dish: danie, którego cena powinna zostać zmieniona
     """
-    pass
+    menu[dish] += 50
 
 
 def fix_key(dct: Dict[str, Any], incorrect_key: str, correct_key: str) -> Dict[str, Any]:
@@ -55,7 +58,12 @@ def fix_key(dct: Dict[str, Any], incorrect_key: str, correct_key: str) -> Dict[s
     :param correct_key: poprawny klucz, który powinien zastąpić błędny klucz
     :return: poprawny słownik (KOPIA słownika wejściowego z poprawionym kluczem)
     """
-    pass
+    dct_copy = dct.copy()
+
+    if incorrect_key in dct_copy:
+        dct_copy[correct_key] = dct_copy[incorrect_key]
+        del dct_copy[incorrect_key]
+    return dct_copy
 
 
 def update_all_prices(menu: Menu) -> None:
@@ -63,13 +71,14 @@ def update_all_prices(menu: Menu) -> None:
 
     :param menu: menu, które należy zaktualizować
     """
-    pass
+    for dish in menu:
+        menu[dish] += 50
 
 
 # TODO: Zdefiniuj alias `ClassRegister` na typ umożliwiający przechowywanie
 #   informacji o ocenach poszczególnych uczniów, tj. mapowanie nazwy
 #   ucznia na listę ocen (będących liczbami zmiennoprzecinkowymi).
-ClassRegister = None
+ClassRegister = Dict[str, List[float]]
 
 
 def average_grades_1(register: ClassRegister) -> Dict[str, float]:
@@ -80,7 +89,12 @@ def average_grades_1(register: ClassRegister) -> Dict[str, float]:
     :param register: dziennik ocen
     :return: mapowanie nazwy ucznia na średnią jego ocen
     """
-    pass
+    averages = {}
+
+    for student, grades in register.items():
+        averages[student] = sum(grades)/len(grades)
+    return averages
+
 
 
 # [OPT]
@@ -93,8 +107,12 @@ def average_grades_2(register: ClassRegister) -> Dict[str, Optional[float]]:
     :return: mapowanie nazwy ucznia na średnią jego ocen (albo None, jeśli
         dany uczeń nie posiada ocen)
     """
-    pass
-
+    averages = {}
+    for student, grades in register.items():
+        if len(grades) == 0:
+            averages[student] = None
+        averages[student] = sum(grades)/len(grades)
+    return averages
 
 def letters_frequencies(s: str) -> Dict[str, int]:
     """Zwróć zestawienie częstości występowania poszczególnych liter w danym słowie.
@@ -102,7 +120,14 @@ def letters_frequencies(s: str) -> Dict[str, int]:
     :param s: łańcuch znaków, dla którego obliczana jest częstość wystąpień liter
     :return: mapowanie litery na częstość jej występowania
     """
-    pass
+    counter = {}
+    for char in s:
+        if char in counter:
+            counter[char] += 1
+        else:
+            counter[char] = 1
+    return counter 
+
 
 
 def letters_frequency_2(s: str) -> Tuple[Dict[str, int], int]:
@@ -115,7 +140,15 @@ def letters_frequency_2(s: str) -> Tuple[Dict[str, int], int]:
     :return: 2-elementowa krotka złożona ze słownika częstości występowania
         poszczególnych liter oraz z liczby unikalnych liter
     """
-    pass
+    freq = {}
+    for char in s:
+        if char in freq:
+            freq[char] += 1
+        else:
+            freq[char] = 1
+    unique_count = len(freq)
+
+    return freq, unique_count
 
 
 def census(register: Dict[str, Dict[str, Any]]) -> Tuple[Dict[str, int], float]:
