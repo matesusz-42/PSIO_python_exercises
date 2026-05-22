@@ -6,6 +6,7 @@
 #
 # -----------------------------------------------------------------------------
 ##tescik gita
+asdja 
 
 def parity_str(n: int) -> str:
     """Zwróć łańcuch znaków "parzysta" jeśli `n` jest liczbą parzystą, a w przeciwym
