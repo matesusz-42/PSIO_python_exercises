@@ -19,7 +19,9 @@ def get_unique_letters(s: str) -> Set[str]:
     :return: zbiór unikalnych liter w łańcuchu znaków, jeśli łańcuch zawiera co
         najmniej 3 znaki, inaczej zbiór pusty
     """
-    pass
+    if len(word) < 3:
+        return set()
+    return set(word)
 
 
 # lista zakupowa - mapowanie nazwy produktu na liczbę sztuk (do kupienia)
