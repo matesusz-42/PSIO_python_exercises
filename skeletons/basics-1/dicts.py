@@ -90,10 +90,13 @@ def average_grades_1(register: ClassRegister) -> Dict[str, float]:
     :return: mapowanie nazwy ucznia na średnią jego ocen
     """
     averages = {}
-
     for student, grades in register.items():
         averages[student] = sum(grades)/len(grades)
+
     return averages
+
+     
+
 
 
 
@@ -126,7 +129,7 @@ def letters_frequencies(s: str) -> Dict[str, int]:
             counter[char] += 1
         else:
             counter[char] = 1
-    return counter 
+    return counter
 
 
 
@@ -162,9 +165,17 @@ def census(register: Dict[str, Dict[str, Any]]) -> Tuple[Dict[str, int], float]:
     :return: 2-elementowa krotka złożona ze słownika opisującego liczbę osób
         z poszczególnych państw oraz ze średniego wieku wszystkich osób
     """
-    pass
-
-
+    total_age = 0
+    country_counts = {}
+    for person, data in register.items():
+        total_age += data['age']
+        country = data['address']['country']
+        if country in country_counts:
+            country_counts[country] += 1
+        else:
+            country_counts[country] = 1
+        average_age = total_age/len(register)
+      total_age   
 # lista zakupowa - mapowanie nazwy produktu na liczbę sztuk (do kupienia)
 ShoppingList = Dict[str, int]
 
@@ -176,7 +187,15 @@ def sum_shopping_lists(list1: ShoppingList, list2: ShoppingList) -> ShoppingList
     :param list2: druga lista zakupowa
     :return: scalone listy zakupowe
     """
-    pass
+    result = {}
+    for item, quantity in list1.items():
+        result[item] = quantity 
+    for item, quantity in list2.items():
+        if item in result:
+            result[item] += quantity
+        else:
+            result[item] = quantity
+    return result
 
 
 def sum_shopping_lists_nonempty(list1: ShoppingList, list2: ShoppingList) -> ShoppingList:
@@ -188,8 +207,12 @@ def sum_shopping_lists_nonempty(list1: ShoppingList, list2: ShoppingList) -> Sho
     :param list2: druga lista zakupowa
     :return: scalone listy zakupowe
     """
-    pass
-
+    suma = sum_shopping_lists(list1, list2)
+    nonempty = {}
+    for item, count in suma.items():
+        if count != 0:
+            nonempty[item] = count
+    return nonempty
 
 def filter_pesels_by_name_initial(persons: Dict[str, str], name_initial: str) -> Set[str]:
     """Zwróć zbiór PESEL-i osób, których imię zaczyna się zadaną literę.
@@ -201,4 +224,6 @@ def filter_pesels_by_name_initial(persons: Dict[str, str], name_initial: str) ->
     :param name_initial: inicjał imienia użyty do filtrowania
     :return: zbiór PESEL-i osób
     """
-    pass
+    return {pesel for pesel, name in persons.items() if name.startswitch(name_initial)}
+
+    
