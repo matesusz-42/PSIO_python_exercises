@@ -13,7 +13,10 @@ def tuple_from_numbers(a: int, b: int) -> Union[Tuple[()], Tuple[int, int]]:
     """Jeśli liczby `a` i `b` są równe zwraca pustą krotkę, jeśli nie – zwraca
         krotkę złożoną z tych liczb.
     """
-    pass
+    if a == b:
+        return ()
+    else:
+        return (a,b)
 
 
 def tuple_from_elements(lst: List[int]) -> Union[Tuple[int, ...], Tuple[None, ...]]:
@@ -29,7 +32,9 @@ def tuple_from_elements(lst: List[int]) -> Union[Tuple[int, ...], Tuple[None, ..
     Wywołaj funkcję tuple_from_elements() tak, aby zwrócona krotka została
     rozpakowana do zmiennych `a`, `b` i `c` (wypisz te zmienne).
     """
-    pass
+    if len(lst) >= 3:
+        return tuple(lst[:3])
+    return (None,)
 
 
 def append_tuple_to_list(lst: List[Any], tpl: Tuple[Any, Any]) -> List[Any]:
@@ -37,4 +42,5 @@ def append_tuple_to_list(lst: List[Any], tpl: Tuple[Any, Any]) -> List[Any]:
 
     W implementacji NIE korzystaj z funkcji list(), tylko z metody extend()!
     """
-    pass
+    lst.extend(tpl)
+    return lst
