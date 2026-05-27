@@ -18,7 +18,11 @@ def is_element_on_list(lst: List[Any], e: Any) -> bool:
     :param e: element, którego występowanie jest sprawdzane
     :return: True jeśli obiekt `e` występuje na liście `lst`, inaczej False
     """
-    pass
+    for element in lst:
+        if element == e:
+            return True
+        return False
+
 
 
 def element_xor(lst: List[Any], e1: Any, e2: Any) -> bool:
@@ -33,7 +37,14 @@ def element_xor(lst: List[Any], e1: Any, e2: Any) -> bool:
     :return: True jeśli obiekt `e1` znajduje się na liście `lst` ORAZ obiekt `e2`
         NIE znajduje się na liście `lst`, inaczej False
     """
-    pass
+    e1_in_lst = False
+    e2_in_lst = False
+    for element in lst:
+        if element == e1:
+            e1_in_lst = True
+        if element == e2:
+            e2_in_lst = True
+    return e1_in_lst and not e2_in_lst
 
 
 def print_every_second_elem(lst: List[str]) -> None:
@@ -47,7 +58,10 @@ def print_every_second_elem(lst: List[str]) -> None:
 
     :param lst: lista łańcuchów znaków
     """
-    pass
+    for i in range(len(lst))L
+    if i % 2 == 1:
+        continue
+    print(f"{i} -> {lst[i]}")
 
 
 def arg_condition(arg: Optional[List[Any]]) -> bool:
@@ -65,7 +79,7 @@ def arg_condition(arg: Optional[List[Any]]) -> bool:
     :return: True jeśli argument jest listą zawierającą więcej niż 2 elementy LUB
         jeśli argument ma wartość None, inaczej False
     """
-    pass
+    return arg is None or len(arg) > 2
 
 
 def list_condition_1(lst: List[int]) -> bool:
@@ -77,7 +91,7 @@ def list_condition_1(lst: List[int]) -> bool:
     :param lst: lista liczb całkowitych
     :return: (zob. opis)
     """
-    pass
+    return len(lst) >= 2 and lst[1] == 5
 
 
 def list_condition_2(lst: List[int]) -> bool:
@@ -89,8 +103,7 @@ def list_condition_2(lst: List[int]) -> bool:
     :param lst: lista liczb całkowitych
     :return: (zob. opis)
     """
-    pass
-
+    return 2 <= len(lst) <= 4 and lst[-2] == 3
 
 def remove_first_three_elements(lst: List[Any]) -> None:
     """Usuń z listy do trzech pierwszych elementów (jeśli istnieją).
@@ -100,7 +113,7 @@ def remove_first_three_elements(lst: List[Any]) -> None:
 
     :param lst: lista elementów dowolnego typu
     """
-    pass
+    lst[:3] = []
 
 
 def replace_last_two_elements(lst: List[int]) -> List[int]:
@@ -114,7 +127,9 @@ def replace_last_two_elements(lst: List[int]) -> List[int]:
     :param lst: lista liczb całkowitych
     :return: lista liczb po ewentualnej zamianie
     """
-    pass
+    if len(lst) >= 2:
+        lst[-2:] = [9]
+    return lst
 
 
 def merge_ends(lst: Optional[List[Any]] = None) -> List[Any]:
@@ -133,7 +148,12 @@ def merge_ends(lst: Optional[List[Any]] = None) -> List[Any]:
     :param lst: lista, której końce mają zostać scalone (domyślnie None)
     :return: lista wynikowa, zawierająca elementy zgodnie ze schematem w opisie
     """
-    pass
+    if len(lst) == 0 or lst is None:
+        return []
+    elif 1 <= len(lst) <= 3:
+        return [lst[0], lst[0]]:
+    else:
+        return [lst[0], lst[1], lst[-2], lst[-1]]
 
 
 def remove_element_if_exists(lst: List[Any], e: Any) -> List[Any]:
@@ -150,7 +170,10 @@ def remove_element_if_exists(lst: List[Any], e: Any) -> List[Any]:
     :return: lista powstała przez usunięcie z listy wejściowej pierwszego
         wystąpienia elementu `e`
     """
-    pass
+    new_lst = lst.copy()
+    if e in lst:
+        new_lst.remove(e)
+    return new_lst
 
 
 # [OPT]
@@ -163,4 +186,5 @@ def is_palindrome(s: str) -> bool:
     :return: wartość logiczna Prawda, jeśli łańcuch znaków jest palindromem,
         inaczej wartość logiczna Fałsz
     """
-    pass
+    s_clean = s.replace(" ", "").lower()
+    return s_clean == s_clean[::-1]
