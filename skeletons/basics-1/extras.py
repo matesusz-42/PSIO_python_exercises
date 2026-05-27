@@ -41,7 +41,7 @@ def products_to_buy(list1: ShoppingList, list2: ShoppingList) -> Set[str]:
     :param list2: druga lista zakupowa
     :return: zbiór produktów, które należy kupić
     """
-    pass
+    return set(list1.keys) | set(list2.keys)
 
 
 def products_only_on_one_list(list1: ShoppingList, list2: ShoppingList) -> int:
@@ -54,7 +54,7 @@ def products_only_on_one_list(list1: ShoppingList, list2: ShoppingList) -> int:
     :param list2: druga lista zakupowa
     :return: liczba produktów, które występują tylko na jednej z list zakupowych
     """
-    pass
+    return len(set(list1.keys) ^ set(list2.keys))
 
 
 def two_dice_rolls_combinations() -> Dict[int, Set[Tuple[int, int]]]:
@@ -65,10 +65,19 @@ def two_dice_rolls_combinations() -> Dict[int, Set[Tuple[int, int]]]:
     :return: słownik zawierający mapowanie sumy oczek na zbiór kombinacji
         wyników rzutu parą kostek
     """
-    pass
-
+    result = {}
+    for d1 in range(1,7):
+        for d2 in range(1,7):
+            s = d1 + d2
+            if s not in result:
+                result[s] = set()
+            result[s].add((d1,d2))
+    return result
 
 def append_and_sort(lst: List[str]) -> List[str]:
     """Utwórz kopię listy wejściowej, dodaj do niej element 'abc', a na koniec
         zwróć jej elementy posortowane w porządku alfabetycznym (rosnącym).
-    """
+    """ 
+    new_lst = lst.copy()
+    new_lst.append('abc')
+    return sorted(new_lst)
