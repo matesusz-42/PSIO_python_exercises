@@ -16,7 +16,7 @@ def remove_duplicates(elements: Iterable[Any]) -> List[Any]:
     Parametry:
     elements -- lista elementów, z której należy usunąć duplikaty
     """
-    pass
+    return list(set(elements))
 
 
 def append(elements: MutableSequence[Any] = None) -> MutableSequence[Any]:
@@ -26,7 +26,10 @@ def append(elements: MutableSequence[Any] = None) -> MutableSequence[Any]:
 
     elements -- lista, do której dopisujemy
     """
-    pass
+    if elements is None:
+        elements = ["hi"]
+    elements.append("hi")
+    return elements
 
 
 # Podpowiedź typu `Num` := jeden z typów: int, float
@@ -39,7 +42,7 @@ def sum_values(my_dict: Mapping[Any, Num]) -> Num:
     Parametry:
     my_dict -- słownik, którego wartości są sumowane
     """
-    pass
+    return sum(my_dict.values())
 
 
 def filter_pesels_by_name_initial(persons: Mapping[str, str], name_initial: str) -> List[str]:
@@ -49,7 +52,7 @@ def filter_pesels_by_name_initial(persons: Mapping[str, str], name_initial: str)
     persons -- baza osób {PESEL -> osoba}
     name_initial -- inicjał imienia użyty do filtrowania
     """
-    pass
+    return [pesel for pesel, name in persons.items() if name.startswitch(name_initial)]
 
 
 def repeat(f: Callable[[Num], Num]) -> List[Num]:
@@ -58,8 +61,10 @@ def repeat(f: Callable[[Num], Num]) -> List[Num]:
 
     Parametry:
     f -- jednoargumentowa funkcja przyjmująca i zwracająca liczbę
+
     """
-    pass
+    for i in [1,3,5]:
+        return f(i)
 
 
 def count_if(words: Sequence[str]) -> int:
@@ -67,7 +72,8 @@ def count_if(words: Sequence[str]) -> int:
     - długość słowa wynosi co najmniej 2
     - słowo zaczyna się na litetę 'a' lub jest palindromem
     """
-    pass
+        return len([word for word in words if len(word) >= 2 and (word.startswitch("a") or word == word[::-1])])
+    
 
 
 def mul_if(numbers: Sequence[Num], predicate: Callable[[Num], bool]) -> Num:
@@ -77,8 +83,11 @@ def mul_if(numbers: Sequence[Num], predicate: Callable[[Num], bool]) -> Num:
      numbers -- kolekcja liczb
      predicate -- predykat
     """
-    pass
-
+    result = 1
+    for number in numbers:
+        if predicate(number):
+            result *= number
+    return result
 
 class MinMax(NamedTuple):
     min: Num
@@ -94,7 +103,11 @@ def min_max(numbers: Sequence[Num], upper_limit: Num = None) -> MinMax:
 
     Typ zwracany: namedtuple (pola: min, max)
     """
-    pass
+    if upper_limit is None:
+        filtered_numbers = numbers
+    else:
+        filtered_numbers = [number for number in numbers if number <= upper_limit]
+    return MinMax(min(filtered_numbers), max(filtered_numbers))
 
 
 if __name__ == '__main__':
