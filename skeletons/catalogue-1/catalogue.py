@@ -2,13 +2,31 @@
 # -*- coding: utf-8 -*-
 import copy
 from typing import Dict, Any, Optional
-
+Inventory = Dict[str, 'Product']
 
 class Product:
-    def __init__(self, id_ : str, name : str, price : float):
-        self.id = id_
+    MAX_PRICE: float = 100.00
+    def __init__(self, id_ : Optional[str] = None, name : str = "", price : float = 0.0) -> None:
+        if id_ is None:
+            self.id = Product.generate_id(name)
+        else:
+            self.id = id_
         self.name = name
         self.price = price
+    @property
+    def price(self) -> float:
+        return self._price
+    @price.setter
+    def price(self, value : float) -> None:
+        if value > Product.MAX_PRICE:
+            self._price = float(Product.MAX_PRICE)
+        else:
+            self._price = float(value)
+    @classmethod
+    def generate_id(cls, name : str) -> str:
+        name_no_spaces = name.replace(" ", "")
+        total_length = len(name)
+        return f"{name_no_spaces}_{total_length}"
     def __str__(self) -> str:
         return f"{self.nazwa} [{self.id}] : ${self.price:.2f}"
     def __eq__(self, other : Any) -> bool:
@@ -20,10 +38,10 @@ class Product:
         
 
 
-Inventory = Dict[str, Product]
+
         
 class Catalogue:
-    Inventory = Dict[str, Product]
+    Inventory = Inventory
     def __init__(self, inventory: Optional[Inventory] = None) -> None:
         if inventory is None:
             self.inventory : Inventory = {}
