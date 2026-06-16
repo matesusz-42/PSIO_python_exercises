@@ -30,15 +30,13 @@ class Car(Vehicle):
         return float(self.engine_hp)
 
 class Bicycle(Vehicle):
-    def __init__(self, id : str, brand : str, n_gears : int) -> None:
-        super().__init__(id_, brand) #przekazujemy id i brand do konstruktora Vehicle
+    def __init__(self, id : str, brand : str, n_gears : int)-> None:
+        super().__init__(id, brand)
         self.n_gears = n_gears
     def max_speed(self) -> float:
         return float(self.n_gears) * 3.0
 def vehicle_collection_as_string(vehicles : Iterable[Vehicle])-> str:
-    #zwraca tekstowa reprezentacje kolekcji pojazdow rozdzielona znakami nowej linii
-    #przechodzimy petla i wywolujemy str() dla kazdego obiektu
-    #a to odpala metode __str__ z klasy Vehicle
+    
     lines = [str(vehicle) for vehicle in vehicles]
     return "\n".join(lines)
 
