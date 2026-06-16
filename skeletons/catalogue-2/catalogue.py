@@ -1,13 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-
 from copy import copy, deepcopy
-from typing import Callable, Mapping, Optional
+from typing import Callable, Mapping, Optional, List
+
+
+class InventoryOverflowException(Exception):
+    pass
 
 
 class Product:
     def __init__(self, id_: Optional[str], name: str, price: float) -> None:
+        if len(name) > 20:
+            raise ValueError(f"Name too long ({len(name)} chars)")
         self.id = id_ if id_ is not None else self.generate_id(name)
         self.name = name
         self.price = price
@@ -18,35 +22,45 @@ class Product:
 
     @price.setter
     def price(self, price: float) -> None:
-        self.__price = min([price, 100])
+        self.__price = min([float(price), 100.0])
 
     def __str__(self) -> str:
         return '{self.name} [{self.id}] : ${self.price:.2f}'.format(self=self)
 
     def __eq__(self, other) -> bool:
+        if not isinstance(other, Product):
+            return False
         return (self.id == other.id) and (self.name == other.name) and (self.price == other.price)
 
     @classmethod
     def generate_id(cls, name: str) -> str:
-        """Wygeneruj ID zgodnie z regułą: usuń spacje i dodaj na koniec liczbę wszystkich znaków w nazwie.
-        """
         return ''.join([c for c in name if c != ' ']) + '_' + str(len(name))
-
-
-# TODO: Usuń poniższą instrukcję i zdefiniuj `InventoryOverflowException` jako wyjątek.
-# InventoryOverflowException = None
-class InventoryOverflowException:
-    pass
 
 
 class Catalogue:
     Inventory = Mapping[str, Product]
 
     def __init__(self, inventory: Inventory = None) -> None:
+        if inventory and len(inventory) > 2:
+            raise InventoryOverflowException()
         self.inventory = deepcopy(inventory) if inventory else {}
 
     def add_product(self, product: Product) -> None:
+        if len(self.inventory) >= 2 and product.id not in self.inventory:
+            raise InventoryOverflowException()
         self.inventory[product.id] = copy(product)
+
+    def add_products(self, products: List[Product]) -> int:
+        added_count = 0
+        for product in products:
+            try:
+                self.add_product(product)
+                added_count += 1
+            except InventoryOverflowException:
+                print(f"Error when adding product: {str(product)}")
+                print("Reason: inventory overflow")
+                break
+        return added_count
 
     def __contains__(self, id_: str) -> bool:
         return id_ in self.inventory
